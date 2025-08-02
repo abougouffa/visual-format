@@ -1,11 +1,11 @@
 ;;; virtual-format.el --- Virtually format buffer without modifying it -*- lexical-binding: t; -*-
 ;;
-;; Copyright (C) 2024 Abdelhak Bougouffa
+;; Copyright (C) 2024-2025 Abdelhak Bougouffa
 ;;
 ;; Author: Abdelhak Bougouffa <abougouffa@fedoraproject.org>
 ;; Maintainer: Abdelhak Bougouffa <abougouffa@fedoraproject.org>
 ;; Created: July 23, 2024
-;; Modified: April 20, 2025
+;; Modified: August 2, 2025
 ;; Version: 0.3.2
 ;; Keywords: convenience faces languages text
 ;; Homepage: https://github.com/abougouffa/virtual-format
@@ -141,8 +141,7 @@ Signal the error according to settings."
       (when virtual-format-jump-on-incomplete-formatting
         (goto-char pos) ; Go to the problematic position
         (recenter)
-        ;; When `pulsar' is available, pulse the problematic line
-        (and (fboundp 'pulsar-pulse-line) (pulsar-pulse-line)))
+        (pulse-momentary-highlight-one-line))
       (user-error "Incomplete formatting at node %S at %d:%d" (treesit-node-type node) line col))))
 
 (defun virtual-format--call-formatter (beg end &optional transfer-formatting)
